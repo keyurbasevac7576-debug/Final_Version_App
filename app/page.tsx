@@ -42,8 +42,8 @@ function RecentEntries() {
     })
     .sort((a, b) => {
         try {
-            if (!a.timestamp || !b.timestamp) return 0;
-            return parseISO(b.timestamp).getTime() - parseISO(a.timestamp).getTime();
+            if (!a.created_at || !b.created_at) return 0;
+            return parseISO(b.created_at).getTime() - parseISO(a.created_at).getTime();
         } catch {
             return 0;
         }
@@ -53,13 +53,13 @@ function RecentEntries() {
 
   const getMemberName = (id: string) => teamMembers?.find(m => m.id === id)?.name || 'N/A';
   const getTaskName = (id: string) => tasks?.find(t => t.id === id)?.name || 'N/A';
-  
+
   const getCategoryNamesFromTask = (taskId: string) => {
     const task = tasks?.find(t => t.id === taskId);
     if (task) {
-        const subCategory = subCategories?.find(sc => sc.id === task.subCategoryId);
+        const subCategory = subCategories?.find(sc => sc.id === task.sub_category_id);
         if (subCategory) {
-            const category = categories?.find(c => c.id === subCategory.categoryId);
+            const category = categories?.find(c => c.id === subCategory.category_id);
             return `${category?.name || 'N/A'} > ${subCategory.name || 'N/A'}`;
         }
     }
@@ -114,19 +114,19 @@ function RecentEntries() {
               {recentEntries.map((entry) => (
                 <TableRow key={entry.id}>
                   <TableCell>{format(new Date(entry.date), 'MMM dd, yyyy')}</TableCell>
-                  <TableCell>{getMemberName(entry.memberId)}</TableCell>
+                  <TableCell>{getMemberName(entry.member_id)}</TableCell>
                   <TableCell>
-                      <div className='font-medium'>{getTaskName(entry.taskId)}</div>
+                      <div className='font-medium'>{getTaskName(entry.task_id)}</div>
                       <div className='text-xs text-muted-foreground'>
-                        {getCategoryNamesFromTask(entry.taskId)}
+                        {getCategoryNamesFromTask(entry.task_id)}
                       </div>
                   </TableCell>
-                  <TableCell>{entry.actualTime}</TableCell>
+                  <TableCell>{entry.actual_time}</TableCell>
                   <TableCell>
-                    {entry.completedMilestone ? (
-                        <span className="font-semibold text-primary">{entry.completedMilestone}</span>
+                    {entry.completed_milestone ? (
+                        <span className="font-semibold text-primary">{entry.completed_milestone}</span>
                     ) : (
-                        <span>{entry.unitsCompleted} units</span>
+                        <span>{entry.units_completed} units</span>
                     )}
                   </TableCell>
                 </TableRow>

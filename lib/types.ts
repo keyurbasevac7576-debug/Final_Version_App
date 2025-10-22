@@ -1,60 +1,25 @@
+import type { Database } from './database.types';
 
-export type WeeklyTarget = {
-  weekStartDate: string; // ISO string for the Monday of the week
-  target: number;
-};
+export type Category = Database['public']['Tables']['categories']['Row'];
+export type CategoryInsert = Database['public']['Tables']['categories']['Insert'];
+export type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
 
-export type Category = {
-  id: string;
-  name: string;
-  isActive: boolean;
-  type: 'category';
-};
+export type SubCategory = Database['public']['Tables']['sub_categories']['Row'];
+export type SubCategoryInsert = Database['public']['Tables']['sub_categories']['Insert'];
+export type SubCategoryUpdate = Database['public']['Tables']['sub_categories']['Update'];
 
-export type SubCategory = {
-  id: string;
-  name: string;
-  categoryId: string;
-  trackingMethod: 'units' | 'milestones';
-  targets: WeeklyTarget[] | string; // Can be string from sheet
-  isActive: boolean;
-  type: 'subCategory';
-}
+export type WeeklyTarget = Database['public']['Tables']['weekly_targets']['Row'];
+export type WeeklyTargetInsert = Database['public']['Tables']['weekly_targets']['Insert'];
+export type WeeklyTargetUpdate = Database['public']['Tables']['weekly_targets']['Update'];
 
-export type Task = {
-  id: string;
-  name: string;
-  standardTime: number;
-  subCategoryId: string;
-  department: string;
-  milestones: string[] | string; // Can be string from sheet
-  isActive: boolean;
-  type: 'task';
-};
+export type Task = Database['public']['Tables']['tasks']['Row'];
+export type TaskInsert = Database['public']['Tables']['tasks']['Insert'];
+export type TaskUpdate = Database['public']['Tables']['tasks']['Update'];
 
-export type TeamMember = {
-  id: string;
-  name: string;
-  role: string;
-  department: string;
-  isActive: boolean;
-  type: 'teamMember';
-};
+export type TeamMember = Database['public']['Tables']['team_members']['Row'];
+export type TeamMemberInsert = Database['public']['Tables']['team_members']['Insert'];
+export type TeamMemberUpdate = Database['public']['Tables']['team_members']['Update'];
 
-export type DailyEntry = {
-  id:string;
-  date: string; // "YYYY-MM-DD"
-  memberId: string;
-  taskId: string;
-  actualTime: number;
-  unitsCompleted: number;
-  unitId?: string; // Optional field for tracking specific units/serial numbers
-  completedMilestone?: string;
-  notes: string;
-  submittedBy: string;
-  timestamp: string; // ISO String
-  type: 'dailyEntry';
-};
-
-// A union type for all possible records in the sheet
-export type SheetRow = Category | SubCategory | Task | TeamMember | DailyEntry;
+export type DailyEntry = Database['public']['Tables']['daily_entries']['Row'];
+export type DailyEntryInsert = Database['public']['Tables']['daily_entries']['Insert'];
+export type DailyEntryUpdate = Database['public']['Tables']['daily_entries']['Update'];
